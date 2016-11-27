@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'coffee-rails', '~> 4.2'
 gem 'database_cleaner', group: [:development, :test]
 gem 'devise'
+gem 'devise-bootstrap-views'
 gem 'dotenv-rails'
 gem 'factory_girl_rails', group: [:development, :test]
 gem 'faker', group: [:development, :test]
@@ -25,6 +26,7 @@ gem 'kaminari'
 gem 'mini_magick'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'nprogress-rails' # turbolinks progressbar
+gem 'omniauth'
 gem 'paranoia', github: 'rubysherpas/paranoia', branch: 'rails5'
 gem 'puma', '~> 3.0'
 gem 'pundit'
