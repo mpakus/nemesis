@@ -1,3 +1,8 @@
 h1 Settings
 
-= link_to 'Connect with Trello', '#'
+- if current_user.accounts.any?
+  .label.label-success Trello connected
+  / @TODO: disconnect
+- else
+  = link_to 'Connect with Trello', cabinet_trellos_path
+

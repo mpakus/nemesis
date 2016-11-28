@@ -5,5 +5,8 @@ Rails.application.routes.draw do
 
   namespace :cabinet do
     resources :settings, only: [:index]
+    resources :trellos, only: [:index] do
+      get :callback, :finishit, on: :collection
+    end
   end
 end

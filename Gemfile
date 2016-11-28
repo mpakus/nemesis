@@ -22,11 +22,12 @@ gem 'font-awesome-rails'
 gem 'jbuilder', '~> 2.5'
 # gem 'jquery-fileupload-rails'
 gem 'jquery-rails'
+gem 'http_logger', group: [:development]
 gem 'kaminari'
 gem 'mini_magick'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'nprogress-rails' # turbolinks progressbar
-gem 'omniauth'
+gem 'oauth'
 gem 'paranoia', github: 'rubysherpas/paranoia', branch: 'rails5'
 gem 'puma', '~> 3.0'
 gem 'pundit'
