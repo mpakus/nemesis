@@ -6,10 +6,10 @@ Rails.application.routes.draw do
   namespace :cabinet do
     resources :settings, only: [:index]
     namespace :settings do
-      resources :trellos, only: [:index] do
-        get :callback, :finishit, on: :collection
-      end
+      resources :trellos, only: [:create]
       resources :boards, only: [:index, :create]
     end
   end
+
+  get '/auth/:provider/callback', to: 'cabinet/settings/trellos#create'
 end

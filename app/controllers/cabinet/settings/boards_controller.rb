@@ -1,11 +1,10 @@
+# frozen_string_literal: true
 class Cabinet::Settings::BoardsController < Cabinet::ApplicationController
   def index
     # @boards =
   end
 
-  def create
-
-  end
+  def create; end
 
   def current_client
     # @current_client ||= Trello::Client.new(
