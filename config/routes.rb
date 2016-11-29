@@ -5,8 +5,11 @@ Rails.application.routes.draw do
 
   namespace :cabinet do
     resources :settings, only: [:index]
-    resources :trellos, only: [:index] do
-      get :callback, :finishit, on: :collection
+    namespace :settings do
+      resources :trellos, only: [:index] do
+        get :callback, :finishit, on: :collection
+      end
+      resources :boards, only: [:index, :create]
     end
   end
 end

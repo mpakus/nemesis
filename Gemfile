@@ -34,6 +34,7 @@ gem 'pundit'
 gem 'russian'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'rubocop', require: false, group: [:development, :test], github: 'bbatsov/rubocop'
+gem 'ruby-trello'
 gem 'rspec-rails', require: false, group: [:development, :test]
 gem 'sass-rails', '~> 5.0'
 gem 'sextant', group: [:development]

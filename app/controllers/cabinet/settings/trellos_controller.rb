@@ -1,4 +1,6 @@
-class Cabinet::TrellosController < Cabinet::ApplicationController
+require 'trello'
+
+class Cabinet::Settings::TrellosController < Cabinet::ApplicationController
   def index
     HttpLogger.colorize = true # Default: true
     HttpLogger.log_headers =true  # Default: false
@@ -6,8 +8,22 @@ class Cabinet::TrellosController < Cabinet::ApplicationController
     HttpLogger.log_response_body = true  # Default: true
     HttpLogger.level = :debug # Desired log level as a symbol. Default: :debug
 
+    # Trello.open_public_key_url
+    #
+    # puts '-------->>>>>>>>>'
+    # puts ENV['TRELLO_KEY']
 
-    redirect_to "https://trello.com/1/authorize?key=#{ENV['TRELLO_KEY']}&name=NemesisApp&oauth_callback=#{callback_cabinet_trellos_url}&expiration=never"
+    # Trello.configure do |config|
+    #   config.consumer_key    = ENV['TRELLO_KEY'],
+    #   config.consumer_secret = ENV['TRELLO_SECRET'],
+    #   config.return_url      = callback_cabinet_settings_trellos_url
+    #   config.callback        = lambda { |request_token| puts '-----'; puts request_token.key; puts request_token.secret; }
+    # end
+    #
+    # mpak = Trello::Member.find('MpaK')
+    # pp mpak
+
+    redirect_to "https://trello.com/1/authorize?key=#{ENV['TRELLO_KEY']}&response_type=token&name=NemesisApp&oauth_callback=#{callback_cabinet_settings_trellos_url}&expiration=never"
 
     # @TODO: check how oauth1 works with trello, because now I always get error 500
     # consumer = OAuth::Consumer.new(
@@ -40,6 +56,6 @@ class Cabinet::TrellosController < Cabinet::ApplicationController
 
   def finishit
     current_user.accounts.create(token: params[:token])
-    redirect_to cabinet_settings_path, notice: 'Trello Connected'
+    redirect_to cabinet_settings_boards_path, notice: 'Trello Connected'
   end
 end
