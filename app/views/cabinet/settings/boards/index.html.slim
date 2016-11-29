@@ -1,3 +1,9 @@
 h1 Settings - Boards
 bockquote
   | Choose Trello boards you prefer to work with
+
+ul
+- @boards.each do |board|
+  li
+    big= board.name
+    small= board.description

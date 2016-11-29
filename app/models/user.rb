@@ -7,7 +7,7 @@ class User < ApplicationRecord
   delegate :token, to: :accounts, prefix: true, allow_nil: true
 
   def find_or_create_from_omniauth(auth)
-    self.accounts.find_or_create_by(uid: auth['uid']).tap do |u|
+    accounts.find_or_create_by(uid: auth['uid']).tap do |u|
       u.name = auth['info']['name']
       u.email = auth['info']['email']
       u.trello_username = auth['info']['nickname']
