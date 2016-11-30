@@ -1,0 +1,38 @@
+h1 Construct report
+
+.row
+  .panel.panel-default.col-lg-4
+    = form_for [:cabinet, @report], class: 'form-horizontal' do |f|
+      .panel-body
+        .form-group
+          = f.text_field :name, class: 'form-control', placeholder: "Report's name"
+      .panel-footer
+        .form-group
+          = f.submit 'Save', class: 'btn btn-default'
+.row
+  h3 Current generators
+  ul
+    - @report.items.each do |item|
+      li= item.generator_name
+.row
+  h3 Add generator
+  = form_for [:cabinet, @report, @item], class: 'form-horizontal' do |f|
+    .form-group.col-lg-12
+      .col-lg-6
+        = f.collection_select :generator_id,  Generator.all, :id, :name, {}, {class: 'form-control'}
+
+    .form-group.col-lg-4
+      ul
+        - @boards.each do |board|
+          li
+            strong= link_to board.name, cabinet_api_lists_path(id: board.id), remote: true
+            small= board.description
+
+    .form-group.col-lg-4
+      #board_lists
+
+    .form-group.col-lg-4
+
+
+    .form-group.col-lg-12
+      = f.submit 'Add to report', class: 'btn btn-primary'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129173308) do
+ActiveRecord::Schema.define(version: 20161130155350) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -24,6 +24,36 @@ ActiveRecord::Schema.define(version: 20161129173308) do
     t.string   "uid",             limit: 64
     t.index ["uid"], name: "index_accounts_on_uid", using: :btree
     t.index ["user_id"], name: "index_accounts_on_user_id", using: :btree
+  end
+
+  create_table "generators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "klass"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "generator_id"
+    t.integer  "report_id"
+    t.text     "boards",       limit: 65535
+    t.text     "lists",        limit: 65535
+    t.datetime "deleted_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["deleted_at"], name: "index_items_on_deleted_at", using: :btree
+    t.index ["generator_id"], name: "index_items_on_generator_id", using: :btree
+    t.index ["report_id"], name: "index_items_on_report_id", using: :btree
+  end
+
+  create_table "reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.datetime "deleted_at"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_reports_on_account_id", using: :btree
+    t.index ["deleted_at"], name: "index_reports_on_deleted_at", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -52,4 +82,7 @@ ActiveRecord::Schema.define(version: 20161129173308) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "items", "generators"
+  add_foreign_key "items", "reports"
+  add_foreign_key "reports", "accounts"
 end

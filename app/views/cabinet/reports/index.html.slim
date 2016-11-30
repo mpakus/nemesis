@@ -1,0 +1,10 @@
+h1 Reports
+
+= link_to 'Create new', cabinet_reports_path, method: :post, class: 'btn btn-success'
+
+table.table.table-striped.table-hover
+  - @reports.each do |report|
+    tr
+      td= report.id
+      td= report.name
+      td= l report.created_at, format: :short
