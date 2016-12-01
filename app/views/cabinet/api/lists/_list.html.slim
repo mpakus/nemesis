@@ -1,4 +1,6 @@
 ul
   - board.lists.each do |list|
     li
-      strong= list.name
+      strong
+        => check_box_tag 'report_lists[]', list.id, false, id: "report_list_#{list.id}", class: 'js_board_list', data: { name: list.name, id: list.id }
+        =< list.name

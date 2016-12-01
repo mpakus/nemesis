@@ -1,6 +1,6 @@
 h1 Construct report
 
-.row
+.row#reports_edit
   .panel.panel-default.col-lg-4
     = form_for [:cabinet, @report], class: 'form-horizontal' do |f|
       .panel-body
@@ -16,10 +16,11 @@ h1 Construct report
       li= item.generator_name
 .row
   h3 Add generator
-  = form_for [:cabinet, @report, @item], class: 'form-horizontal' do |f|
+  /= form_for [:cabinet, @report, @item], class: 'form-horizontal' do |f|
+  = form_for [:cabinet, @report], class: 'form-horizontal' do |f|
     .form-group.col-lg-12
       .col-lg-6
-        = f.collection_select :generator_id,  Generator.all, :id, :name, {}, {class: 'form-control'}
+        = select_tag 'report[items_attributes][][generator_id]', options_for_select(Generator.all.collect{|i| [i.name, i.id]}), class: 'form-control'
 
     .form-group.col-lg-4
       ul
@@ -32,7 +33,8 @@ h1 Construct report
       #board_lists
 
     .form-group.col-lg-4
-
+      = hidden_field_tag 'report[items_attributes][][lists]', '[]', id: 'report_list'
+      ul#report_list_items
 
     .form-group.col-lg-12
       = f.submit 'Add to report', class: 'btn btn-primary'
