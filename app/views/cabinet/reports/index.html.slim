@@ -1,10 +1,14 @@
 h1 Reports
 
-= link_to 'Create new', cabinet_reports_path, method: :post, class: 'btn btn-success'
-
+.clearfix
+  = link_to 'Create new', cabinet_reports_path, method: :post, class: 'btn btn-success'
+br/
 table.table.table-striped.table-hover
   - @reports.each do |report|
     tr
-      td= report.id
-      td= report.name
-      td= l report.created_at, format: :short
+      td.col-lg-1= report.id
+      td.col-lg-8= report.name
+      td.col-lg-2= l report.created_at, format: :short
+      td.col-lg-1
+        .pull-right
+          = link_to 'Edit', edit_cabinet_report_path(report), class: 'btn btn-primary'

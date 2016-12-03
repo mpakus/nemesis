@@ -11,7 +11,9 @@ class Cabinet::ReportsController < Cabinet::ApplicationController
 
   def edit
     @item = Item.new
-    @boards = current_client.find(:members, current_account.uid).boards
+    @boards = Rails.cache.fetch("#{current_account.uid}/boards", expires_in: 1.hour) do
+      current_client.find(:members, current_account.uid).boards
+    end
   end
 
   def update
