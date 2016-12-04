@@ -1,4 +1,8 @@
 //= require shared/twb
 //= require devise_bootstrap_views
-//= require home/creative
 //= require cabinet/menu
+//= require cabinet/reports
+
+body{
+  margin-top: 60px;
+}

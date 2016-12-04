@@ -7,8 +7,11 @@ table.table.table-striped.table-hover
   - @reports.each do |report|
     tr
       td.col-lg-1= report.id
-      td.col-lg-8= report.name
+      td.col-lg-6= report.name
       td.col-lg-2= l report.created_at, format: :short
+      td.col-lg-2
+        - report.scores.each do |score|
+          = link_to l(score.created_at, format: :short), cabinet_score_path(score)
       td.col-lg-1
         .pull-right
           = link_to 'Edit', edit_cabinet_report_path(report), class: 'btn btn-primary'

@@ -1,0 +1,17 @@
+h1 Report generate on #{l @score.created_at, format: :short}
+
+- content = eval(@score.content)[0]
+/= content.inspect
+- content.each do |row|
+  h3= row[:name]
+  .row.clearfix
+    - row[:cards].each do |card|
+        .panel.panel-default.col-lg-3.col-lg-offset-1
+          .panel-body
+            h6= link_to card[:name], card[:url]
+            small= card[:description]
+            hr
+            | Members:
+            ul
+            - card[:members].each do |member|
+              li= link_to member[:full_name], member[:url]

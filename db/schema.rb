@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130155350) do
+ActiveRecord::Schema.define(version: 20161204140220) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 20161130155350) do
     t.index ["deleted_at"], name: "index_reports_on_deleted_at", using: :btree
   end
 
+  create_table "scores", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "report_id"
+    t.string   "code",       limit: 24
+    t.text     "content",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["code"], name: "index_scores_on_code", using: :btree
+    t.index ["report_id"], name: "index_scores_on_report_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -85,4 +95,5 @@ ActiveRecord::Schema.define(version: 20161130155350) do
   add_foreign_key "items", "generators"
   add_foreign_key "items", "reports"
   add_foreign_key "reports", "accounts"
+  add_foreign_key "scores", "reports"
 end

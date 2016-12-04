@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :reports, except: [:show] do
       scope module: 'reports' do
         resources :items, only: [:create, :edit]
+        resources :scores, only: [:show], shallow: true
       end
     end
     namespace :api do
