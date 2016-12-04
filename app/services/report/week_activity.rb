@@ -2,16 +2,55 @@ class Report::WeekActivity
   def initialize(report, item)
     @report = report
     @item = item
+    @data = []
   end
 
   def perform
     lists.each do |list_id|
-      puts '-------'
-      pp Api::FetchCards.new(list_id).perform
+      list = Api::FetchList.new(list_id).perform
+      row = {
+        name: "Cards in column: #{list.name}",
+        list_id: list.id,
+      }
+
+      cards = []
+      list.cards.each do |card|
+        cards << fetch_card(card)
+      end
+
+      row[:cards] = cards
+      @data << row
     end
+    @data
   end
 
   private
+
+  def fetch_card(card)
+    {
+      id: card.id,
+      name: card.name,
+      description: card.desc,
+      url: card.url,
+      due: card.due,
+      closed: card.closed,
+      members: fetch_members(card.member_ids)
+    }
+  end
+
+  def fetch_members(member_ids)
+    members = []
+    member_ids.each do |id|
+      member = Api::FetchMember.new(id).perform
+      members << {
+        id: member.id,
+        username: member.username,
+        full_name: member.full_name,
+        url: member.url
+      }
+    end
+    members
+  end
 
   # Parse json string with list of columns ids
   # @return [Array]
