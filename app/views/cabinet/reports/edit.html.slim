@@ -21,8 +21,6 @@ h1 Construct report
       table.table.table-striped
         tr
           th History
-          th
-          th
         - @report.scores.order(created_at: :desc).each do |score|
           tr
             td= link_to l(score.created_at, format: :short), cabinet_score_path(score), target: '_blank'

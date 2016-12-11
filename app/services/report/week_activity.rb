@@ -1,6 +1,5 @@
 class Report::WeekActivity
-  def initialize(report, item)
-    @report = report
+  def initialize(item)
     @item = item
     @data = []
   end

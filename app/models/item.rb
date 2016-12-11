@@ -1,7 +1,14 @@
 class Item < ApplicationRecord
+  after_save :transform_lists
   belongs_to :generator
   delegate :name, to: :generator, prefix: true, allow_nil: true
   belongs_to :report
+
+  private
+
+  def transform_lists
+    return if lists.blank?
+  end
 end
 
 # == Schema Information
