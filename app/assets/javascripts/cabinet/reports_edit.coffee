@@ -32,7 +32,9 @@ class ReportsEdit
 
   # -- METHODS
 
-  fetch_list: -> JSON.parse(@receiver.val()) || []
+  fetch_list: ->
+    console.log @receiver.val()
+    JSON.parse(@receiver.val()) || []
   save_list: (list)-> @receiver.val(JSON.stringify(list))
 
   add_to_list: (id, name)->

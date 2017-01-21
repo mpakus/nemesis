@@ -10,7 +10,7 @@ class Cabinet::ReportsController < Cabinet::ApplicationController
   end
 
   def edit
-    @item = Item.new
+    @item = Item.find(params[:item_id]) if params[:item_id]
     @boards = Rails.cache.fetch("#{current_account.uid}/boards", expires_in: 1.hour) do
       current_client.find(:members, current_account.uid).boards
     end

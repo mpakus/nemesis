@@ -1,13 +1,34 @@
 class Item < ApplicationRecord
-  after_save :transform_lists
+  before_save :transform_lists
   belongs_to :generator
   delegate :name, to: :generator, prefix: true, allow_nil: true
   belongs_to :report
+
+  def js_lists_ids
+    '["' + fetch_lists.collect{ |list| list[:id] }.join('", "') + '"]'
+  end
+
+  def fetch_lists
+    eval(lists)
+  end
 
   private
 
   def transform_lists
     return if lists.blank?
+    lists_ids = fetch_lists
+    lists_ids.collect! do |list_id|
+      return if list_id.is_a? Hash
+      list = Api::FetchList.new(list_id).perform
+      board = Api::FetchBoard.new(list.board_id).perform
+      {
+        id: list.id,
+        name: list.name,
+        board_name: board.name,
+        board_id: board.id
+      }
+    end
+    self.lists = lists_ids
   end
 end
 

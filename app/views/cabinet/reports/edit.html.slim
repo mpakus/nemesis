@@ -11,12 +11,11 @@ h1 Construct report
         tr
           th Current generators
           th
-          th
         - @report.items.each do |item|
           tr
             td= item.generator_name
-            td.pull-right= link_to 'Remove', '', class: 'btn btn-danger btn-xs'
-            td.pull-right= link_to 'Edit', '', class: 'btn btn-xs btn-primary'
+            /td.pull-right= link_to 'Remove', '', class: 'btn btn-danger btn-xs'
+            td.pull-right= link_to 'Edit', edit_cabinet_report_path(item_id: item.id), class: 'btn btn-xs btn-primary'
 
       table.table.table-striped
         tr
@@ -26,11 +25,10 @@ h1 Construct report
             td= link_to l(score.created_at, format: :short), cabinet_score_path(score), target: '_blank'
 
   .col-lg-8
-    /= form_for [:cabinet, @report, @item], class: 'form-horizontal' do |f|
     = form_for [:cabinet, @report], class: 'form-horizontal' do |f|
       .form-group.col-lg-12
         .col-lg-6
-          = select_tag 'report[items_attributes][][generator_id]', options_for_select(Generator.all.collect{|i| [i.name, i.id]}), class: 'form-control'
+          = select_tag 'report[items_attributes][][generator_id]', options_for_select(Generator.all.collect{|i| [i.name, i.id]}, @item&.id), class: 'form-control'
 
       .form-group.col-lg-4
         ul
@@ -43,8 +41,12 @@ h1 Construct report
         #board_lists
 
       .form-group.col-lg-4
-        = hidden_field_tag 'report[items_attributes][][lists]', '[]', id: 'report_list'
+        input name="report[items_attributes][][lists]" type="hidden" value='#{@item ? @item.js_lists_ids.html_safe : '[]'}' id = 'report_list'
         ul#report_list_items
+          - @item.fetch_lists.each do |list|
+            li id="report_list_item_#{list[:id]}"
+              = list[:name]
+              a href="#" class="js_report_list_item label label-danger pull-right" data-id="#{list[:id]}" x
 
       .form-group.col-lg-12
         = f.submit 'Add Generator', class: 'btn btn-success'
